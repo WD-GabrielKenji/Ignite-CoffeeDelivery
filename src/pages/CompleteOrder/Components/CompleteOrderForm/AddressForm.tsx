@@ -4,8 +4,18 @@ import { Input } from '../../../../Components/Input'
 
 import { AddressFormContainer } from './styles'
 
+interface ErrorsType {
+  errors: {
+    [key: string]: {
+      message: string
+    }
+  }
+}
+
 export function AddressForm() {
-  const { register } = useFormContext()
+  const { register, formState } = useFormContext()
+
+  const { errors } = formState as unknown as ErrorsType
 
   return (
     <AddressFormContainer>
@@ -14,22 +24,38 @@ export function AddressForm() {
         type="number"
         className="cep"
         {...register('cep')}
+        error={errors.cep?.message}
       />
       <Input
         placeholder="Rua"
         type=""
         className="street"
         {...register('street')}
+        error={errors.street?.message}
       />
-      <Input placeholder="Número" type="number" {...register('number')} />
+      <Input
+        placeholder="Número"
+        type="number"
+        {...register('number')}
+        error={errors.number?.message}
+      />
       <Input
         placeholder="Complemento"
         className="complement"
         {...register('complement')}
+        error={errors.complement?.message}
       />
-      <Input placeholder="Bairro" {...register('district')} />
-      <Input placeholder="Cidade" {...register('city')} />
-      <Input placeholder="UF" {...register('uf')} />
+      <Input
+        placeholder="Bairro"
+        {...register('district')}
+        error={errors.district?.message}
+      />
+      <Input
+        placeholder="Cidade"
+        {...register('city')}
+        error={errors.city?.message}
+      />
+      <Input placeholder="UF" {...register('uf')} error={errors.uf?.message} />
     </AddressFormContainer>
   )
 }
