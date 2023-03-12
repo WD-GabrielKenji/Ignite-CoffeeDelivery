@@ -42,9 +42,26 @@ export const HeaderButton = styled.button<HeaderButtonProps>`
   border-radius: 6px;
   cursor: inherit;
   font-size: ${({ theme }) => theme.textSizes['text-regular-s']};
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: calc(-1.25rem / 2);
+    right: calc(-1.25rem / 2);
+    border-radius: 50%;
+    color: ${({ theme }) => theme.colors['base-white']};
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
   ${({ variant }) => css`
     background: ${({ theme }) => theme.colors[`brand-${variant}-light`]};
     color: ${({ theme }) => theme.colors[`brand-${variant}-dark`]};
+    span {
+      background: ${({ theme }) => theme.colors[`brand-${variant}-dark`]};
+    }
   `}
   ${({ variant }) =>
     variant === 'purple' &&
