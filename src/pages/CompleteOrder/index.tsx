@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useCart } from '../../hooks/useCart'
 import { CompleteOrderForm } from './Components/CompleteOrderForm'
 import { SelectedCoffees } from './Components/SelectedCoffees'
 
@@ -44,11 +45,13 @@ export function CompleteOrder() {
   const { handleSubmit } = confirmOrderForm
 
   const navigate = useNavigate()
+  const { cleanCart } = useCart()
 
   function handleConfirmOrder(data: ConfirmOrderFormData) {
     navigate('/orderConfirmed', {
       state: data,
     })
+    cleanCart()
   }
 
   return (
