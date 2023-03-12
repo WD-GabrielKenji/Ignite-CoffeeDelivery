@@ -4,22 +4,23 @@ import {
   InputStyleContainer,
   InputStyled,
   InputWrapper,
-  RightText,
+  OptionalText,
 } from './styles'
 import { RegularText } from '../Typography'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   error?: string
-  rightText?: string
+  optionalText?: string
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ error, rightText, className, ...props }, ref) => {
+  ({ error, optionalText, className, ...props }, ref) => {
     return (
       <InputWrapper className={className}>
         <InputStyleContainer hasError={!!error}>
           <InputStyled ref={ref} {...props} />
-          {rightText && <RightText>{rightText}</RightText>}
+
+          {optionalText && <OptionalText>{optionalText}</OptionalText>}
         </InputStyleContainer>
 
         {error && <RegularText size="s">{error}</RegularText>}
