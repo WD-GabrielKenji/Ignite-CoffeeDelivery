@@ -1,4 +1,5 @@
 import { useForm, FormProvider } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -42,8 +43,12 @@ export function CompleteOrder() {
 
   const { handleSubmit } = confirmOrderForm
 
+  const navigate = useNavigate()
+
   function handleConfirmOrder(data: ConfirmOrderFormData) {
-    console.log(data)
+    navigate('/orderConfirmed', {
+      state: data,
+    })
   }
 
   return (
