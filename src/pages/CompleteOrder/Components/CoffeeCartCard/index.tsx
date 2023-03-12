@@ -1,7 +1,9 @@
+import { useCart } from '../../../../hooks/useCart'
+import { CartItem } from '../../../../contexts/CartContext'
+import { formatMoney } from '../../../../utils/formatMoney'
 import { RegularText } from '../../../../Components/Typography'
 import { QuantityInput } from '../../../../Components/QuantifyInput'
 
-import coffee from '../../../../../public/coffees/tradicional.png'
 import { Trash } from 'phosphor-react'
 import {
   ActionsContainer,
@@ -9,23 +11,50 @@ import {
   RemoveButton,
 } from './styles'
 
-export function CoffeeCartCard() {
+interface CoffeeCartCardProps {
+  coffee: CartItem
+}
+
+export function CoffeeCartCard({ coffee }: CoffeeCartCardProps) {
+  const { changeCartItemQuantity, removeCartItem } = useCart()
+
+  const coffeeTotal = coffee.price * coffee.quantity
+  const formattedPrice = formatMoney(coffeeTotal)
+
+  function handleIncrease() {
+    changeCartItemQuantity(coffee.id, 'increase')
+  }
+
+  function handleDecrease() {
+    changeCartItemQuantity(coffee.id, 'decrease')
+  }
+
+  function handleRemove() {
+    removeCartItem(coffee.id)
+  }
+
   return (
     <CoffeeCartCardContainer>
       <div>
-        <img src={coffee} alt="" />
+        <img src={`/coffees/${coffee.photo}`} alt="" />
 
         <div>
-          <RegularText color="subtitle">Expresso Tradicional</RegularText>
+          <RegularText color="subtitle">{coffee.name}</RegularText>
           <ActionsContainer>
-            <QuantityInput size="small" />
-            <RemoveButton type="button">
+            <QuantityInput
+              onIncrease={handleIncrease}
+              onDecrease={handleDecrease}
+              quantity={coffee.quantity}
+              size="small"
+            />
+            <RemoveButton type="button" onClick={handleRemove}>
               <Trash size={16} />
               REMOVER
             </RemoveButton>
           </ActionsContainer>
         </div>
       </div>
+      <p>R$ {formattedPrice}</p>
     </CoffeeCartCardContainer>
   )
 }
